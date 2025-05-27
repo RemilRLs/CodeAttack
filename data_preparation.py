@@ -8,20 +8,11 @@ class DataPreparer:
         self.query_file = query_file
         self.prompt_name = prompt_name
         self.prompt_type = prompt_type
-        self._prompt = prompt_name
         self.query_name = query_file.split('/')[-1].split('.')[0]
 
-    @property
-    def prompt(self):
-        """The prompt property, loaded from a file template."""
-        return self._prompt
+        with open(f"./prompt_templates/{prompt_name}", 'r') as file:
+            self._prompt = file.read()
 
-    @prompt.setter
-    def prompt(self, prompt_name: str):
-        filename = f"./prompt_templates/{prompt_name}"
-        with open(filename, 'r') as file:
-            prompt = file.read()
-        return prompt
 
     def replace(self, filepath, replacement, replace_line=None):
         prompt_prefix = ""
@@ -76,7 +67,7 @@ class DataPreparer:
         if "python" in self.prompt_name:
             # If the template is python, use python built-in format method to
             # inject the input replacing the placeholders
-            prompt = self.prompt.format(wrapped_input=wrapped_input)
+            prompt = self._prompt.format(wrapped_input=wrapped_input)
         else:
             # If the template is in a language other than python, use the
             # replace function from this class
