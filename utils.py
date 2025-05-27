@@ -18,28 +18,30 @@ llama_client = ""
 def api_call(client, query: Union[List, str],
              model_name="gpt-4o",
              response_format='text',
-             temperature=1):
+             temperature=1,
+             max_tokens=512):
+
     if isinstance(query, List):
         messages = query
     elif isinstance(query, str):
         messages = [{"role": "user", "content": query}]
+
     for _ in range(3):
         try:
             completion = client.chat.completions.create(
                 model=model_name,
                 messages=messages,
-                max_tokens=1000,
                 temperature=temperature,
+                max_tokens=max_tokens,
                 response_format={"type": response_format}
             )
-            resp = completion.choices[0].message.content
-            return resp
+            return completion.choices[0].message.content
         except Exception as e:
-            print(messages)
             print(f"API_CALL Error: {e}")
             time.sleep(3)
             continue
-    return ""
+    return "API call failed"
+
 
 
 def get_client(model_name):
