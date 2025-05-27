@@ -16,16 +16,7 @@ For more details, please refer to our paper [ACL 2024](https://arxiv.org/abs/240
 ## 🛠️ Usage
 ✨An example run:
 ```
-python3 main.py --num-sample 1 \
---prompt-type python_stack_plus \
---query-file ./data/harmful_behaviors.csv \
---target-model=gpt-4o \
---judge-model=gpt-4o \
---exp-name=main \
---target-max-n-tokens=1000 \
---multi-thread \
---temperature 0 \
---start-idx 0 --end-idx -1
+python main.py --num-sample 1 --prompt-type python_stack_plus --query-file ./data/harmful_behaviors.csv --target-model=gpt-4o --judge-model=gpt-4o --exp-name=main --target-max-n-tokens=1000 --multi-thread --temperature 0 --start-idx 0 --end-idx -1 
 ```
 ### Experiments 
 1. The 'data' foler contains the dataset `harmful_behaviors.csv` from [AdvBench](https://github.com/llm-attacks/llm-attacks). You can add your original dataset here.
